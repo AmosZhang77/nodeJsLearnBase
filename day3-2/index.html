@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-md-offset-4" style="margin-top: 30px">
+            <div class="col-md-5">
+                <label for="username">用户名</label>
+                <input type="text" id="username">
+            </div>
+            <div class="col-md-5">
+                <label for="password">密码</label>
+                <input type="text" id="password">
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary btn-sm add">添加</button>
+            </div>
+        </div>
+        <ul class="list-group col-md-8 col-md-8 col-md-offset-2">
+            <li class="list-group-item">
+                用户名：XXX 密码：XXX2
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+<script>
+
+  /**
+   * querySelector 和 getElementsByClassName 区别，前者会把当时查出来的结果保存出来，如果有变化不会更新。后者实时更新。
+   *
+   */
+  (function () {
+    let str = ``
+      let template = function (username, password) {
+        return `<li class="list-group-item">
+                用户名：${username}   密码：${password}
+            </li>`
+      }
+/*    function template(username, password) {
+      return `<li class="list-group-item">
+            用户名：${username}   密码：${password}
+        </li>`
+    }*/
+
+    let oUl = document.querySelector('.list-group')
+    console.log('oUl', oUl)
+    let username = document.getElementById('username')
+    let password = document.getElementById('password')
+    let add = document.querySelector('.add')
+
+    fetch('/user').then(res => {
+      return res.json()
+    }).then(data => {
+      // console.log(data)
+      data.forEach((item) => {
+        str += template(item.username, item.password)
+      })
+      console.log('str',str)
+      oUl.innerHTML = str
+    }).catch(err => {
+        console.log(err)
+      }
+    )
+
+    // 添加用户按钮
+    add.addEventListener('click', () => {
+      fetch('/user', {
+        method: 'POST',
+        body: JSON.stringify({ username: username.value, password: password.value })
+      }).then(res => {
+        return res.json()
+      }).then(data => {
+        let oDiv = document.createElement('div')
+        oDiv.innerHTML = template(data.username, data.password)
+        oUl.appendChild(oDiv.firstElementChild)
+      })
+    }, false)
+  })()
+</script>
+</html>

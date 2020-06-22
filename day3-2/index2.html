@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<!--跨域-->
+<!--webstorm开html端口63342 后台起服务端口3000-->
+<!--jsonp 利用script没有跨域的问题 来实现跨域-->
+</body>
+<!--<script src="http://localhost:3000/jsonp"></script>-->
+<script>
+  function c (data) {
+    console.log('data', data)
+
+  }
+  let oScript = document.createElement('script')
+  oScript.src = 'http://localhost:3000/jsonp?cb=c' // 通过参数告诉后端回调函数的名字是 c
+  console.log(document,document.body)
+  document.body.appendChild(oScript)
+</script>
+</html>

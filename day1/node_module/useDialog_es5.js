@@ -1,0 +1,19 @@
+/** 调用写好的方法
+ // 自己写的文件要用 ./ 方式找 ../ 相对路径，可以省略.js .json .node后缀，依次匹配，如果有同名还是要写，否则按.js .json .node找到js类型的文件就不找下一个类型的了。
+
+ */
+require('./dialog_es5') // 同步模块方法
+console.log(1)  // 先打印上面文件里面的2 再打印1，require是同步模块方法
+// 如果异步方法一般会有回调函数
+
+let DiaLog = require('./dialog_es5')
+console.log(DiaLog) // {} 其实就是默认拿模块的exports对象
+
+// 方法1
+// let dialog = new DiaLog.Dialog
+
+// 方法2
+let dialog = new DiaLog
+
+dialog.$show()
+
