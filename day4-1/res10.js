@@ -42,4 +42,7 @@ app.get('/status',function (req,res) {
 app.get('/send',function (req,res) {
   // send会判断参数，自动处理
   res.send(500) // 返回一个页面，页面会展示Internal Server Error。 调接口，network报500
+  // 中文也会自动加头
 })
+
+// 一般都用send 和 sendFile 方法
